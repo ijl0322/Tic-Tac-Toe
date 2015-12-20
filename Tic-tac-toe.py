@@ -12,6 +12,8 @@ RED = (255,0,0)
 BLUE = (0,0,255)
 BLACK = (0,0,0)
 myfont = pygame.font.SysFont(None, 50)
+smaller_font = pygame.font.SysFont(None, 30)
+
 
 blocks = []
 for i in range(3):
@@ -28,6 +30,8 @@ while True:
             
     window.fill(WHITE)
     header = myfont.render("Tic-Tac-Toe", True, RED)
+    player = smaller_font.render("Player:", True, BLUE)
+    window.blit(player,(300, 100))
     window.blit(header, (30, 50))
     pygame.draw.rect(window, BLACK, pygame.Rect(25, 125, 400, 400))
     
