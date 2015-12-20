@@ -34,26 +34,21 @@ def checkPlayer(player):
         return "Player 2"
 
     
-def main():
-    
-    board = init_board()  
-    player = True              
-    printBoard(board)            
+def main(player,board,i,j):                        
 
-    while not checkWin(board):
-        #print checkPlayer(player)                     
-        #move = raw_input("Please Enter move:")
-        if board[int(move[0])][int(move[1])] == "-":
+    if not checkWin(board):
+
+        if board[i][j] == "-":
             if player:
-                board[int(move[0])][int(move[1])] = "O"
+                board[i][j] = "O"
             else:
-                board[int(move[0])][int(move[1])] = "X"               
-            printBoard(board)
-            
+                board[i][j] = "X"               
+
+           
             if checkWin(board):
                 print checkPlayer(player), "wins"
             player = not player
 
-
+    return board, player
             
 

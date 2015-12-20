@@ -22,10 +22,12 @@ for i in range(3):
 
 def buildText(board,i,j):
         
-    if board[j][i] == "-":        
+    if board[i][j] == "-":        
         text = myfont.render(" ", True, BLUE)
-    else:
-        text = myfont.render(board[j][i], True, BLUE)
+    elif board[i][j] == "O":
+        text = myfont.render(board[i][j], True, RED)
+    elif board[i][j] == "X":
+        text = myfont.render(board[i][j], True, BLACK)        
     textRect = text.get_rect()
     textRect.centerx = i*130 + 95
     textRect.centery = j*130 + 195
@@ -39,27 +41,46 @@ def showText(board):
         for j in range(3):
             window.blit(buildText(board,i,j)[0], buildText(board,i,j)[1])
 
+board = init_board()
+player = True
 while True:
     
-    board = init_board()
+
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-            
+        if event.type == KEYDOWN:
+            if event.key == K_1:                
+                board, player = main(player, board, 0, 0)
+            if event.key == K_2:                
+                board, player = main(player, board, 1, 0)
+            if event.key == K_3:                
+                board, player = main(player, board, 2, 0)
+            if event.key == K_4:                
+                board, player = main(player, board, 0, 1)
+            if event.key == K_5:                
+                board, player = main(player, board, 1, 1)
+            if event.key == K_6:                
+                board, player = main(player, board, 2, 1)
+            if event.key == K_7:                
+                board, player = main(player, board, 0, 2)
+            if event.key == K_8:                
+                board, player = main(player, board, 1, 2)
+            if event.key == K_9:                
+                board, player = main(player, board, 2, 2)
+        
+           
     window.fill(WHITE)
     header = myfont.render("Tic-Tac-Toe", True, RED)
-    player = smaller_font.render((checkPlayer(True)), True, BLUE)
-    window.blit(player,(300, 100))
+    player_now = smaller_font.render((checkPlayer(player)), True, BLUE)
+    window.blit(player_now,(300, 100))
     window.blit(header, (30, 50))
     pygame.draw.rect(window, BLACK, pygame.Rect(25, 125, 400, 400))
     
     for block in blocks:
         pygame.draw.rect(window, block[1], block[0])
 
-
-
-    
 
     showText(board)
         
