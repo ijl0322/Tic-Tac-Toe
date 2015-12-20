@@ -20,7 +20,7 @@ def buildText(board,i,j):
     if board[i][j] == "-":        
         text = myfont.render(" ", True, BLUE)
     elif board[i][j] == "O":
-        text = myfont.render(board[i][j], True, RED)
+        text = myfont.render(board[i][j], True, BLUE)
     elif board[i][j] == "X":
         text = myfont.render(board[i][j], True, BLACK)        
     textRect = text.get_rect()
@@ -36,6 +36,23 @@ def showText(board):
         for j in range(3):
             window.blit(buildText(board,i,j)[0], buildText(board,i,j)[1])
 
+def quitWindow(event):
+    if event.type == QUIT:
+        pygame.quit()
+        sys.exit()
+    
+
+def win(board, player):
+    
+    window.fill(WHITE)
+    label = myfont.render(checkPlayer(player) + " wins" , True, RED)
+    labelRect = label.get_rect()
+    labelRect.centerx = window.get_rect().centerx
+    labelRect.centery = window.get_rect().centery
+    window.blit(label, labelRect) 
+    event = pygame.event.wait()
+    quitWindow(event)        
+    
 
 def gameLoop():
 
@@ -50,9 +67,7 @@ def gameLoop():
     while True:
         
         for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
+            quitWindow(event)
             if event.type == KEYDOWN:
                 if event.key == K_1:                
                     board, player = main(player, board, 0, 0)
@@ -72,7 +87,7 @@ def gameLoop():
                     board, player = main(player, board, 1, 2)
                 if event.key == K_9:                
                     board, player = main(player, board, 2, 2)
-            
+                                
                
         window.fill(WHITE)
         header = myfont.render("Tic-Tac-Toe", True, RED)
@@ -85,7 +100,14 @@ def gameLoop():
             pygame.draw.rect(window, block[1], block[0])
 
         showText(board)
+
+        if checkWin(board):
+            """Even though a player wins, the player has already been toggled
+            Thus printing out the player will result in a incorrect player
+            winning. NEED FIXING"""
+            win(board, not player)
             
+        
         pygame.display.update()
 
         time.sleep(0.02)
