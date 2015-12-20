@@ -29,10 +29,11 @@ def checkWin(board):
 
 def checkPlayer(player):
     if player:
-        return "player 1"
+        return "Player 1"
     else:
-        return "player 2"  
+        return "Player 2"
 
+    
 def main():
     
     board = init_board()  
@@ -40,11 +41,9 @@ def main():
     printBoard(board)            
 
     while not checkWin(board):
-        print checkPlayer(player)                     
-        move = raw_input("Please Enter move:")
-        if board[int(move[0])][int(move[1])] == "O" or board[int(move[0])][int(move[1])] == "X":
-            print "Slot already taken, please try again"
-        else:        
+        #print checkPlayer(player)                     
+        #move = raw_input("Please Enter move:")
+        if board[int(move[0])][int(move[1])] == "-":
             if player:
                 board[int(move[0])][int(move[1])] = "O"
             else:
@@ -54,5 +53,7 @@ def main():
             if checkWin(board):
                 print checkPlayer(player), "wins"
             player = not player
+
+
             
-main()
+
